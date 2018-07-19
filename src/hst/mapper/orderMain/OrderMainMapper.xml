@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hst.mapper.orderMain.OrderMainMapper">
+
+<resultMap type="hst.model.orderMain.OrderMainBean" id="findResultMap">
+	<id column="F_OrdID" property="ordId"/>
+	<result column="F_Date" property="date"/>
+	<result column="F_CliName" property="cliname"/>
+	<result column="F_XmName" property="xmName"/>
+	<result column="F_EdMan" property="edMan"/>
+</resultMap>
+
+	<select id="findOrderMain" resultMap="findResultMap">
+		select o.F_OrdID,o.F_Date,o.F_CliName,o.F_XmName,o.F_EdMan from T_XS_Order_Main o
+	</select>
+	<!-- public List<OrderMainBean> findByOrdId(String ordId); -->
+	 <select id="findByOrdId" resultMap="findResultMap">
+		select o.F_OrdID,o.F_Date,o.F_CliName,o.F_XmName,o.F_EdMan from T_XS_Order_Main o where o.F_OrdID=#{ordId}
+	</select>
+	
+	<!-- //组合查询
+	public List<OrderMainBean> select(OrderMainBean orderMain); -->
+	
+	<select id="select" resultMap="findResultMap" parameterType="hst.model.orderMain.OrderMainBean">
+		select F_OrdID,F_Date,F_CliName,F_XmName,F_EdMan from T_XS_Order_Main 
+		where F_OrdID like '%'+#{ordId}+'%' and F_CliName like '%'+#{cliname}+'%' and F_XmName like '%'+#{xmName}+'%'
+	</select>
+</mapper>

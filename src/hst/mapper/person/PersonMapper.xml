@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hst.mapper.person.PersonMapper">
+	<resultMap type="hst.model.person.PersonBean" id="findResultMap">
+	
+		<id column="F_JobId" property="jobId"/>
+		<result column="F_Name" property="name"/>
+		<result column="F_Pass" property="pass"/>
+		<result column="F_Department" property="department"/>
+		<result column="F_zhiwu" property="zhiwu"/>
+		<result column="F_Gender" property="sex"/>
+		<result column="F_Email" property="email"/>
+	</resultMap>
+<select id="checkLogin" parameterType="map" resultMap="findResultMap">
+	select * from T_HR_Person where F_Name=#{name} and F_Pass=#{pass}
+</select>
+<select id="check" parameterType="String" resultMap="findResultMap">
+	select * from T_HR_Person where F_Name=#{name} 
+</select>
+<!-- public List<PersonBean> sendEmail(String jobId); -->
+<select id="sendEmail" parameterType="String" resultMap="findResultMap">
+	select * from T_HR_Person where F_JobId=#{jobId} 
+</select>
+<!-- public List<PersonBean> listPerson(); -->
+<select id="listPerson" resultMap="findResultMap" parameterType="String">
+	select * from T_HR_Person where F_Department='项目部' or F_zhiwu='总经理&amp;销售部部门经理&amp;销售员' or F_zhiwu='总工程师&amp;程序员'
+</select>
+</mapper>

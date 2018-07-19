@@ -1,0 +1,11 @@
+/* Write your styles */ 
+ /* 检测小屏幕- */
+/*@media only screen and (max-width: 760px) {
+　　.am-hide-sm-only { display: none; }
+} */
+　/* 　.am-hide-sm-only { display: none; } */
+ 
+
+@media only screen and (min-width: 1029px){
+.am-hide-sm-only { display: inherit; }
+}

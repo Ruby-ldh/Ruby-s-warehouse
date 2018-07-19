@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hst.mapper.trialCode.TrialCodeMapper">
+<resultMap type="hst.model.trialCode.TrialCodeBeen" id="findResultMap">
+	<id column="id" property="id"/>
+	<result column="TC_Code" property="code"/>
+	<result column="F_OrdID" property="ordId"/>
+	<result column="F_XmName" property="ordName"/>
+	<result column="E_OrderId" property="orderId"/>
+	<result column="TC_ApplicantUserId" property="applicantUserId"/>
+	<result column="TC_AuditorUserId" property="auditorUserId"/>
+	<result column="TC_ApplicantUserName" property="applicantUserName"/>
+	<result column="TC_AuditorUserName" property="auditorUserName"/>
+	<result column="TC_ApplicantTime" property="applicantTime"/>
+	<result column="TC_ExpirationTime" property="expirationTime"/>
+	<result column="TC_ProbationLength" property="probationLength"/>
+	<result column="TC_AuditorTime" property="auditorTime"/>
+	<result column="TC_Remark" property="remark"/>
+	
+  		<result column="TC_Machinecode" property="machineCode" />
+  		<result column="E_Local" property="local" />
+  		<result column="E_Type" property="type" />
+  		<result column="E_Authorization" property="authorization" />
+  		<result column="E_System" property="system" />
+  		<result column="E_Address" property="address" />
+  		<result column="E_Version" property="version" />
+  		<result column="E_State" property="state" />
+</resultMap>
+
+<!-- E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+ -->
+<!-- //展示试用时长10天以下的数据 -->
+	<select id="findProbationLength" resultMap="findResultMap">
+		select E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,
+		TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,
+		F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+ 	 from T_TrialCode where TC_ExpirationTime&lt;dateadd(day,11,Convert(varchar(100),getdate(),23)) 
+		
+	</select>
+	<!-- public List<TrialCodeBeen> findProbationLengthByPage(); -->
+	<select id="findByPage" resultMap="findResultMap">
+		 select E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+		from T_TrialCode where TC_ProbationLength between 0 and 10 
+		<!-- select t.TC_Code,t.E_OrderId,t.TC_ApplicantUserName,t.TC_AuditorUserName,t.TC_ExpirationTime,t.TC_ProbationLength from T_TrialCode t
+	 -->
+	 </select>
+
+	
+	<select id="findTrialCodeBeenId" resultMap="findResultMap" parameterType="String">
+		select E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+ from T_TrialCode t,T_Equipment e where e.E_OrderId=t.E_OrderId and e.E_OrderId=#{orderId}
+	</select> 
+		
+		<!-- public void addTrialCode(TrialCodeBeen trialCodeBeen); -->
+	<insert id="addTrialCode" parameterType="hst.model.trialCode.TrialCodeBeen">	
+		insert into T_TrialCode(E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,
+		TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version) 
+			values (#{orderId},#{code},#{applicantUserId},#{applicantUserName},#{auditorUserId},#{auditorUserName},
+			#{auditorTime},#{reason},#{probationLength},#{expirationTime},#{remark},#{applicantTime},#{ordId},#{ordName},#{machineCode},
+			#{local},#{type},#{authorization},#{system},#{address},#{version})
+	</insert>
+	
+	<!-- public TrialCodeBeen findByCode(String code); -->
+	<select id="findByCode" parameterType="String" resultMap="findResultMap">
+			select E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+ 				from T_TrialCode where TC_Code=#{code}
+	</select>
+	<!-- 根据项目编号查询 -->
+	<!-- public List<TrialCodeBeen> findByOrdId(String ordId); -->
+	<select id="findByOrdId" resultMap="findResultMap" parameterType="String">
+		select E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+				 from T_TrialCode 
+			where (select top 1 TC_AuditorTime from T_TrialCode 
+			where F_OrdID=#{ordId} order by TC_AuditorTime desc )&gt;TC_AuditorTime and  F_OrdID=#{ordId}  order by TC_AuditorTime desc
+			
+	</select> 
+	<!-- //根据项目编号查出设备
+	public List<TrialCodeBeen> listOrderId(String ordId); -->
+	<select id="listOrderId" resultMap="findResultMap" parameterType="String">
+		select * from T_TrialCode where F_OrdID=#{ordId} 
+			
+	</select> 
+	
+	<!-- E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+	//根据项目名称查询
+	public List<TrialCodeBeen> findByOrdName(TrialCodeBeen trialCodeBeen); -->
+	<select id="findByOrdName" resultMap="findResultMap" parameterType="hst.model.trialCode.TrialCodeBeen">
+		select * from T_TrialCode where TC_ExpirationTime&lt;=dateadd(day,10,Convert(varchar(100),getdate(),23)) and  F_XmName like '%'+#{ordName}+'%'
+	</select> 
+	
+	<!-- //根据审核时间查找出最新的一条数据
+	public TrialCodeBeen findByNew(String ordId); -->
+	<select id="findByNew" resultMap="findResultMap" parameterType="String" >
+		select top 1 E_OrderId,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime,TC_Reason,TC_ProbationLength,TC_ExpirationTime,TC_Remark,TC_ApplicantTime,F_OrdID,F_XmName,TC_Machinecode,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Version,E_State
+		 from T_TrialCode where F_OrdID=#{ordId} order by TC_AuditorTime desc 
+	</select>
+	
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hst.mapper.equipment.EquipmentMapper">
+  <resultMap type="hst.model.equipment.EquipmentBean" id="findResultMap">
+  		<id column="id" property="id"/>
+		<result column="E_orderName" property="orderName"/>
+  		<result column="F_OrdID" property="ordId" />
+  		<result column="E_Machinecode" property="machineCode" />
+  		<result column="E_Local" property="local" />
+  		<result column="E_Type" property="type" />
+  		<result column="E_Authorization" property="authorization" />
+  		<result column="E_System" property="system" />
+  		<result column="E_Address" property="address" />
+  		<result column="E_Version" property="version" />
+  		<result column="E_ExpirationTime" property="expirationTime" />
+  		<result column="E_State" property="state" />
+  		<result column="F_XmName" property="xmName"/>
+	<result column="TC_Code" property="code"/>
+	<result column="TC_ApplicantUserId" property="applicantUserId"/>
+	<result column="TC_AuditorUserId" property="auditorUserId"/>
+	<result column="TC_ApplicantUserName" property="applicantUserName"/>
+	<result column="TC_AuditorUserName" property="auditorUserName"/>
+	<result column="TC_ApplicantTime" property="applicantTime"/>
+	<result column="TC_ProbationLength" property="probationLength"/>
+	<result column="TC_AuditorTime" property="auditorTime"/>
+	<result column="TC_Reason" property="reason"/>
+	<result column="TC_Remark" property="remark"/>
+	<result column="addPersonId" property="addPersonId"/>
+	<result column="addPersonName" property="addPersonName"/>
+	<result column="addTime" property="addTime"/>
+	<result column="mailState" property="mailState"/>
+  </resultMap>
+  <!-- //遍历查询
+	public List<EquipmentBean> listEquipmentBean(); -->
+	 <select id="listEquipmentBean" resultMap="findResultMap">
+  		select * from T_Equipment 
+  </select>
+	
+  <!-- //通过设备编号查找所有
+	public List<EquipmentBean> findByorderName(int id); -->
+  <select id="findByorderName" parameterType="int" resultMap="findResultMap">
+  select * from T_Equipment  where  id=#{id}
+  </select>
+	
+	<!-- //组合查询
+	public List<EquipmentBean> combinationQuery(EquipmentBean equipmentBean); -->
+	<select id="combinationQuery" parameterType="hst.model.equipment.EquipmentBean" resultMap="findResultMap">
+  select F_OrdID,E_orderName,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Machinecode,E_Version,E_ExpirationTime,E_State,F_XmName 
+  	from T_Equipment  where  E_orderName like '%'+#{orderName}+'%' and F_OrdID like '%'+#{ordId}+'%' and F_XmName like '%'+#{xmName}+'%'
+  </select>
+  
+  <!-- //设备添加
+	public void addEquipment(EquipmentBean equipmentBean); -->
+	<insert id="addEquipment" parameterType="hst.model.equipment.EquipmentBean">
+	insert into T_Equipment(F_OrdID,E_orderName,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Machinecode,E_Version,E_State,F_XmName,addPersonId,addPersonName,addTime,mailState) 
+			values (#{ordId},#{orderName},#{local},#{type},#{authorization},#{system},#{address},#{machineCode},#{version},#{state},#{xmName},#{addPersonId},#{addPersonName},#{addTime},#{mailState})
+	</insert>
+	
+	<!-- //设备删除
+	public void deleteEquipment(int id); -->
+	<delete id="deleteEquipment" parameterType="int">
+	delete from T_Equipment where id=#{id}
+	</delete>
+	<!-- //判断设备编号是否重复
+	public EquipmentBean excludeRepetition(int id); -->
+	<select id="excludeRepetition" parameterType="int" resultMap="findResultMap">
+  <!-- select F_OrdID ordId,E_orderName,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Machinecode,E_Version,E_ExpirationTime,E_State,F_XmName from T_Equipment  where  id=#{id} -->
+ select * from T_Equipment  where  id=#{id}
+  </select>
+ 
+			
+  <!-- //因为添加试用码而修改数据库
+	public void updateBytrialCode(EquipmentBean equipmentBean); -->
+	<update id="updateBytrialCode" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set TC_Code=#{code},TC_ApplicantUserId=#{applicantUserId},TC_ApplicantUserName=#{applicantUserName},
+		TC_AuditorUserId=#{auditorUserId},TC_AuditorUserName=#{auditorUserName},TC_AuditorTime=#{auditorTime},TC_Reason=#{reason},
+		TC_ProbationLength=#{probationLength},E_ExpirationTime=#{expirationTime},TC_Remark=#{remark},TC_ApplicantTime=#{applicantTime}
+		 where id=#{id}
+	</update>
+	
+  <!-- 根据项目编号查找 -->
+  <select id="findEquipmentBeanId" parameterType="String" resultMap="findResultMap">
+  		 select * from T_Equipment where F_OrdID=#{ordId}  
+  </select>
+  
+  <!-- F_OrdID,E_orderName,E_Local,E_Type,E_Authorization,E_System,E_Address,E_Machinecode,E_Version,E_ExpirationTime,E_State
+      ,F_XmName,TC_Code,TC_ApplicantUserId,TC_ApplicantUserName,TC_AuditorUserId,TC_AuditorUserName,TC_AuditorTime
+      ,TC_Reason,TC_ProbationLength,TC_Remark,TC_ApplicantTime,id -->
+  
+  <!-- //根据审核时间查找出最新的一条数据
+	public List<EquipmentBean> findByNew(String ordId); -->
+	<select id="findByNew" resultMap="findResultMap" parameterType="String" >
+		 select  top 1 s.* from (select * from T_Equipment where F_OrdID=#{ordId} and TC_Code is not null) s order by s.TC_AuditorTime desc
+	</select>
+	
+	<!-- //查找试用码为空的数据
+	public List<EquipmentBean> codeNull(String ordId);-->
+	<select id="codeNull" resultMap="findResultMap" parameterType="String">
+		select * from (select * from T_Equipment where F_OrdID=#{ordId}) s where s.TC_Code is null or s.TC_Code='' 
+	</select>
+	
+	<!-- //查找试用码不为空的字段
+	public List<EquipmentBean> codeNotNull(String ordId);  -->
+	<select id="codeNotNull" resultMap="findResultMap" parameterType="String">
+	
+<!-- 	select * from (select * from T_Equipment where F_OrdID=#{ordId}) s where s.TC_Code is not null and 
+	s.TC_Code not in (select  top 1 TC_Code from T_Equipment where F_OrdID=#{ordId}  order by TC_AuditorTime desc) 
+	order by s.TC_AuditorTime desc -->
+	select * from (select * from T_Equipment where F_OrdID=#{ordId}) s where s.TC_Code is not null 
+	order by s.TC_AuditorTime desc
+	</select>
+	
+	<!--//根据项目名称查询,到期提醒
+	public List<EquipmentBean> findByOrdName(EquipmentBean equipmentBean); -->
+	<select id="findByOrdName" resultMap="findResultMap" parameterType="hst.model.trialCode.TrialCodeBeen">
+	select * from (select * from T_Equipment where E_State='0' and TC_Code is not null) s
+	where s.E_ExpirationTime&lt;=dateadd(day,10,Convert(varchar(100),getdate(),23)) and  s.F_XmName like '%'+#{xmName}+'%' 
+		</select> 
+		
+	<!-- //10天到期提醒
+	public List<EquipmentBean> findByExpirationTimebyTen();
+	 -->	
+		<select id="findByExpirationTimebyTen" resultMap="findResultMap" parameterType="hst.model.trialCode.TrialCodeBeen">
+	select * from (select * from T_Equipment where E_State='0' and TC_Code is not null) s
+	where s.E_ExpirationTime&lt;=dateadd(day,10,Convert(varchar(100),getdate(),23)) and s.mailState='0'
+		</select> 
+		
+	<!-- //4天到期提醒
+	public List<EquipmentBean> findByExpirationTimebyFour(); -->	
+		<select id="findByExpirationTimebyFour" resultMap="findResultMap" parameterType="hst.model.trialCode.TrialCodeBeen">
+	select * from (select * from T_Equipment where E_State='0' and TC_Code is not null) s
+	where s.E_ExpirationTime&lt;=dateadd(day,4,Convert(varchar(100),getdate(),23)) and s.mailState='0'
+		</select> 
+		
+		
+		
+		<!-- //修改设备
+	public void updateEquipment(EquipmentBean equipmentBean); -->
+	<update id="updateEquipment" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set TC_Code=#{code},TC_ApplicantUserId=#{applicantUserId},TC_ApplicantUserName=#{applicantUserName},
+		TC_AuditorUserId=#{auditorUserId},TC_AuditorUserName=#{auditorUserName},TC_AuditorTime=#{auditorTime},TC_Reason=#{reason},
+		TC_ProbationLength=#{probationLength},E_ExpirationTime=#{expirationTime},TC_Remark=#{remark},TC_ApplicantTime=#{applicantTime},
+		 E_State=#{state} where id=#{id}
+	</update>
+	
+	<!-- //一键切换正式版的状态
+	public void updateState(EquipmentBean equipmentBean); -->
+	
+	<!-- TC_Code=#{code},TC_ApplicantUserId=#{applicantUserId},TC_ApplicantUserName=#{applicantUserName},
+		TC_AuditorUserId=#{auditorUserId},TC_AuditorUserName=#{auditorUserName},TC_AuditorTime=#{auditorTime},TC_Reason=#{reason},
+		TC_ProbationLength=#{probationLength},E_ExpirationTime=#{expirationTime},TC_Remark=#{remark},TC_ApplicantTime=#{applicantTime},
+		 -->
+	<update id="updateState" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set  E_State=#{state} where id=#{id}
+	</update>
+	
+	<!-- //修改到期时间大于十天的mailState状态
+	public void updateByExpirationTimeByOther(EquipmentBean equipmentBean); -->
+	<update id="updateByExpirationTimeByOther" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set mailState='0' where E_State='0' and E_ExpirationTime&gt;dateadd(day,10,Convert(varchar(100),getdate(),23))
+	</update>
+	<!-- //修改到期时间小于十天的mailState状态
+	public void updateByExpirationTimeByTen(EquipmentBean equipmentBean); -->
+	<update id="updateByExpirationTimeByTen" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set mailState='1' where E_State='0' and E_ExpirationTime&lt;=dateadd(day,10,Convert(varchar(100),getdate(),23))
+	</update>
+	<!-- //修改到期时间小于四天的状态，把mailState之前的true改成false
+	public void updateByExpirationTimeByFourByFalse(EquipmentBean equipmentBean); -->
+	<update id="updateByExpirationTimeByFourByFalse" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set mailState='0' where E_State='0' and E_ExpirationTime&lt;=dateadd(day,4,Convert(varchar(100),getdate(),23))
+	</update>
+	<!-- //修改到期时间小于四天的状态，把mailState之前的false改成true
+	public void updateByExpirationTimeByFourByTrue(EquipmentBean equipmentBean); -->
+	<update id="updateByExpirationTimeByFourByTrue" parameterType="hst.model.equipment.EquipmentBean">
+		update T_Equipment set mailState='1' where E_State='0' and E_ExpirationTime&lt;=dateadd(day,4,Convert(varchar(100),getdate(),23))
+	</update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hst.mapper.apply.ApplyMapper">
+<resultMap type="hst.model.apply.ApplyBean" id="findResult">
+<!-- ordName,orderName,machineCode,sqId,sqName,sqReason,sqTime,shId -->
+	<id column="applyId" property="applyId"/>
+	<result  column="id" property="id"/>
+	<result  column="machineCode" property="machineCode"/>
+	<result column="ordName" property="ordName"/>
+	<result column="ordId" property="ordId"/>
+	<result column="orderName" property="orderName"/>
+	<result column="sqId" property="sqId"/>
+	<result column="sqName" property="sqName"/>
+	<result column="sqReason" property="sqReason"/>
+	<result column="sqTime" property="sqTime"/>
+	
+	<result column="shId" property="shId"/>
+	<result column="shName" property="shName"/>
+	<result column="remark" property="remark"/>
+	<result column="shTime" property="shTime"/>
+	<result column="expirationTime" property="expirationTime"/>
+	
+  		<result column="local" property="local" />
+  		<result column="type" property="type" />
+  		<result column="E_Authorization" property="authorization" />
+  		<result column="system" property="system" />
+  		<result column="address" property="address" />
+  		<result column="version" property="version" />
+  		<result column="state" property="state" />
+  		<result column="code" property="code"/>
+</resultMap>
+<!--
+遍历
+ public List<ApplyBean> listApply(); -->
+	<select id="listApply" resultMap="findResult">
+		select * from Apply where state=0 order by sqTime desc
+	</select>
+	
+	<!-- #{ordId},#{ordName},#{orderName},#{machineCode},#{sqId},#{sqName},#{sqReason},#{sqTime},#{local},#{type},#{E_Authorization},#{system},#{address},#{version},#{applyId},#{state},#{id},#{shId},#{shName},#{shTime},#{remark},#{expirationTime} -->
+	<!-- 
+	申请添加
+	public void addApply(ApplyBean applyBean); -->
+	<insert id="addApply" parameterType="hst.model.apply.ApplyBean">
+		insert into Apply(id,state,ordId,ordName,orderName,machineCode,sqId,sqName,sqReason,sqTime,local,type,E_Authorization,system,address,version) 
+		values (#{id},#{state},#{ordId},#{ordName},#{orderName},#{machineCode},#{sqId},#{sqName},#{sqReason},#{sqTime},#{local},#{type},#{authorization},#{system},#{address},#{version})
+	</insert>
+<!-- 	public void updateApply(ApplyBean applyBean); -->
+	
+	<!--
+	删除
+	 public void deleteApply(int id); -->
+	<delete id="deleteApply" parameterType="int">
+		delete from Apply where applyId=#{applyId}
+	</delete>
+	<!--
+	通过机器码查找
+	 public ApplyBean findByMachineCode(int id); -->
+	<select id="findByMachineCode" parameterType="int" resultMap="findResult">
+	<!-- ordId,ordName,orderName,machineCode,sqId,sqName,sqReason,sqTime,local,type,authorization,system,address,version -->
+		select * from Apply where applyId=#{applyId}
+	</select>
+	
+	<!-- //修改审核状态
+	public void updateApply(ApplyBean applyBean); -->
+	<update id="updateApply" parameterType="hst.model.apply.ApplyBean">
+		update Apply set state=#{state},shId=#{shId},shName=#{shName},remark=#{remark},shTime=#{shTime},expirationTime=#{expirationTime},code=#{code} where applyId=#{applyId}
+	</update>
+	<!-- //遍历某个特定设备下的试用码申请记录
+	public List<ApplyBean> listApplyByOrderName(int id); -->
+	<select id="listApplyByOrderName" resultMap="findResult" parameterType="int">
+		select * from Apply where id=#{id} and state=1
+	</select>
+	
+	<!-- //某人的申请记录
+	public List<ApplyBean> findByIdApply(String sqId); -->
+	<select id="findByIdApply" resultMap="findResult" parameterType="String">
+		select * from Apply where sqId=#{sqId} order by sqTime desc
+	</select>
+	
+</mapper>
