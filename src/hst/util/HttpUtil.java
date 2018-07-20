@@ -1,7 +1,6 @@
 package hst.util;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.Header;
@@ -12,7 +11,6 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,17 +22,17 @@ import net.sf.json.JSONObject;
 
 /** 
 * @author Ruby E-mail: 1104471752@qq.com
-* @version ����ʱ�䣺2018��6��14�� ����9:40:42 
-* ��˵�� 
+* @version 创建时间：2018年7月9日 下午1:41:51 
+* 类说明 
 */
 @Service("httpUtil")
 public class HttpUtil {
-		/**
-	     * json 字符串
-	     * @param url ���������URL
-	     * @param param ��������������Ӧ���� name1=value1&name2=value2 ����ʽ��or �����url��Ҫ�Ĳ���, û�в���ֱ�Ӵ�null
-	     * @return ����Զ����Դ����Ӧ���
-	     */
+	/**
+	* json 字符串
+	* @param url
+	* @param param
+	* @return
+	*/
 	public static String getSerchPersion(String url,String param){
 		/* 1 生成 HttpClinet 对象并设置参数 */
 		HttpClient httpClient=new HttpClient();
@@ -99,12 +97,10 @@ public class HttpUtil {
 		DefaultHttpClient client = new DefaultHttpClient();
 		          HttpPost post = new HttpPost(url);
 		          JSONObject response = null;
-		          
 		              StringEntity s;
-		              
 					try {
-						s = new StringEntity(json.toString());
-						s.setContentEncoding("UTF-8");
+						s = new StringEntity(json.toString(),"UTF-8");
+						/*s.setContentEncoding("UTF-8");*/
 						s.setContentType("application/json");//发送json数据需要设置contentType
 						post.setEntity(s);
 						HttpResponse res;
