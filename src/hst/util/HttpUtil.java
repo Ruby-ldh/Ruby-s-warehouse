@@ -108,22 +108,16 @@ public class HttpUtil {
 						s.setContentType("application/json");//发送json数据需要设置contentType
 						post.setEntity(s);
 						HttpResponse res;
-						try {
+						
 							res = client.execute(post);
 							if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 								HttpEntity entity = res.getEntity();
 								String result = EntityUtils.toString(res.getEntity(), HTTP.UTF_8);
 								
 								response = JSONObject.fromObject(result);
+							
 							}
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} catch (UnsupportedEncodingException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

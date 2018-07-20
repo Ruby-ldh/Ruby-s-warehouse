@@ -213,7 +213,7 @@
                   <table class="table m-0">
                     <thead>
                                         <tr>
-                                            
+                                            <th style="display:none; ">id</th>
                                             <th class="am-hide-sm-only">项目名</th>
                                             <th >设备名称</th>
                                             <th class="am-hide-sm-only">机器码</th>
@@ -227,13 +227,22 @@
                                             <th class=" am-hide-sm-only">地址</th>
                                             <th class="table-title">试用版本</th>
                                             <th class="table-title">到期时间</th>
-                                            <!-- <th class=" am-hide-sm-only">正式版本状态</th> -->
+                                            <th>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                   
+                   <c:if test="${person.getZhiwu().equals('总经理&销售部部门经理&销售员') ||person.getZhiwu().equals('总工程师&程序员')||person.getDepartment().equals('项目部') }">
+                  					操作
+                    </c:if>
+                                                    </div>
+                                                </div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${findByOrdName }" var="list">
                                         <tr>
-                                          
+                                          <td id="id" style="display:none; ">${list.id }</td>
                                             <td class="am-hide-sm-only">${list.xmName }</td>
                                             <td>${list.orderName }</td>
                                             <td class="am-hide-sm-only">${list.machineCode }</td>
@@ -248,9 +257,18 @@
                                             <td>
                                             <fmt:formatDate value="${list.expirationTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
                                             </td>
-                                           <%--  <td  class="am-hide-sm-only">${list.state }</td> --%>
-                                            
-                                        </tr>
+                                          <td>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                   
+                   <c:if test="${person.getZhiwu().equals('总经理&销售部部门经理&销售员') ||person.getZhiwu().equals('总工程师&程序员')||person.getDepartment().equals('项目部') }">
+                  					  <a href="findByorderName.do?id=${list.id }">
+                                            <i class="fa fa-edit"></i><span class="am-icon-pencil-square-o">试用码申请</span>
+                                            </a>
+                    </c:if>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </c:forEach>
                                         
                                     </tbody>

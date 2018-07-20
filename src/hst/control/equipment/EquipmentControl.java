@@ -176,7 +176,11 @@ public class EquipmentControl {
 			 params.put("mXMID", orderName);
 			 params.put("command", "gettrialcode");
 			 JSONObject jsonObject = httpUtil.doPost(url,params);
-			 System.out.println(jsonObject.toString());
+			 System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+			 System.out.println("jsonObject.toString():"+jsonObject.toString());
+			 System.out.println("mOpMan:"+auditorUserName);
+			 System.out.println("params.toString():"+params.toString());
+			 System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			 Object code=jsonObject.get("sn");
 			 request.setAttribute("sn", code);
 			 System.out.println(code);
@@ -304,7 +308,7 @@ public class EquipmentControl {
 		@RequestMapping("findByOrdName.do")
 		public String findByOrdName(@RequestParam(value="PageNum",defaultValue="1",required=true)Integer PageNum,@RequestParam(value="PageSize",defaultValue="10",required=true)Integer PageSize,HttpServletRequest request,HttpServletResponse response) throws Exception{
 			PageHelper.startPage(PageNum, PageSize);
-			PageHelper.orderBy("TC_AuditorTime desc");
+			PageHelper.orderBy("TC_AuditorTime asc");
 			
 			EquipmentBean equipmentBean=new EquipmentBean();
 			

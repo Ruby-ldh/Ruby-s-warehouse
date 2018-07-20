@@ -178,33 +178,33 @@
                                     <label for="user-phone">id：</label>
                                     <div class="am-u-sm-9">
                                          <input class="form-control" type="text" id="state" name="state" value="1" style="display: none;">
-                                         <input class="form-control" type="text" id="id" name="id" value="${applyBean.id }" readonly="true">
-                                         <input class="form-control" type="text" id="applyId" name="applyId" value="${applyBean.applyId }" readonly="true">
+                                         <input class="form-control" type="text" id="id" name="id" value="${applyBean.id }" readonly="readonly">
+                                         <input class="form-control" type="text" id="applyId" name="applyId" value="${applyBean.applyId }" readonly="readonly">
                                     </div>
                                 </div>
                             
                                  <div class="form-group">
                       <label for="user-phone">项目编号：</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="ordId" name="ordId" value="${applyBean.ordId }" readonly="true">
+                                         <input class="form-control" type="text" id="ordId" name="ordId" value="${applyBean.ordId }" readonly="readonly">
                                     </div>
                                 </div>
                                  <div class="form-group">
                                    <label for="user-phone">项目名称：</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="ordName" name="ordName" value="${applyBean.ordName }" readonly="true">
+                                         <input class="form-control" type="text" id="ordName" name="ordName" value="${applyBean.ordName }" readonly="readonly">
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <label for="user-phone">设备名称：</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="equipment" name="equipment" value="${applyBean.orderName }" readonly="true">
+                                         <input class="form-control" type="text" id="equipment" name="equipment" value="${applyBean.orderName }" readonly="readonly">
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <label for="user-phone">机器码： </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="machineCode" name="machineCode" value="${applyBean.machineCode }" readonly="true">	
+                                         <input class="form-control" type="text" id="machineCode" name="machineCode" value="${applyBean.machineCode }" readonly="readonly">	
                                    		<span id="sqidSpan"></span>
                                     </div>
                                 </div> 
@@ -212,64 +212,64 @@
                                 <div class="form-group">
                                     <label for="user-name">申请人id: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="sqid" name="sqid" value="${applyBean.sqId }" readonly="true">	
+                                         <input class="form-control" type="text" id="sqid" name="sqid" value="${applyBean.sqId }" readonly="readonly">	
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="user-email">申请人姓名:</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="sqname" name="sqname" value="${applyBean.sqName }" readonly="true">	
+                                         <input class="form-control" type="text" id="sqname" name="sqname" value="${applyBean.sqName }" readonly="readonly">	
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="user-phone">申请原因:</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="sqreason" name="sqreason" value="${applyBean.sqReason }" readonly="true">	
+                                         <input class="form-control" type="text" id="sqreason" name="sqreason" value="${applyBean.sqReason }" readonly="readonly">	
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="user-name">申请时间: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="sqtime" name="sqtime" value="${sqtime }" readonly="true">	
+                                         <input class="form-control" type="text" id="sqtime" name="sqtime" value="${sqtime }" readonly="readonly">	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">使用地点: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="local" name="local" value="${applyBean.local }" readonly="true">	
+                                         <input class="form-control" type="text" id="local" name="local" value="${applyBean.local }" readonly="readonly">	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">设备类型: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="type" name="type" value="${applyBean.type }" readonly="true">	
+                                         <input class="form-control" type="text" id="type" name="type" value="${applyBean.type }" readonly="readonly">	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">是否授权: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="authorization" name="authorization" value="${applyBean.authorization }" readonly="true">	
+                                         <input class="form-control" type="text" id="authorization" name="authorization" value="${applyBean.authorization }"readonly="readonly"e>	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">操作系统: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="system" name="system" value="${applyBean.system }" readonly="true">	
+                                         <input class="form-control" type="text" id="system" name="system" value="${applyBean.system }" readonly="readonly">	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">地址: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="address" name="address" value="${applyBean.address }" readonly="true">	
+                                         <input class="form-control" type="text" id="address" name="address" value="${applyBean.address }" readonly="readonly">	
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="user-name">试用版本: </label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="version" name="version" value="${applyBean.version }" readonly="true">	
+                                         <input class="form-control" type="text" id="version" name="version" value="${applyBean.version }" readonly="readonly">	
                                     </div>
                                 </div>
 <!-- ---------------------------------------------审核人信息--------------------------------------------------- -->
@@ -278,14 +278,14 @@
                                 <div class="form-group">
                                     <label for="user-phone">审核人id：</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="shid" name="shid" value="${person.jobId}" readonly="true" required>
+                                         <input class="form-control" type="text" id="shid" name="shid" value="${person.jobId}" readonly="readonly" required>
                                     	
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <label for="user-phone">审核人姓名：</label>
                                     <div class="am-u-sm-9">
-                                         <input class="form-control" type="text" id="shname" name="shname"  value="${person.name}" readonly="true" required>
+                                         <input class="form-control" type="text" id="shname" name="shname"  value="${person.name}" readonly="readonly" required>
                                     </div>
                                 </div>
                                  <div class="form-group">
