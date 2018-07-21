@@ -288,10 +288,10 @@
 									<span>显示${pageInfo.startRow }到${pageInfo.endRow}共${pageInfo.total}条</span> <input
 									type="hidden" id="page" name="page"> <input type="hidden"
 									id="pageSize" name="pageSize"> <a
-									href="findByOrdName.do?PageNum=1">首页 </a>
+									href="findByIdApply.do?sqId=${person.jobId }&PageNum=1">首页 </a>
 									<c:choose>
 									<c:when test="${pageInfo.hasPreviousPage }">
-									<a href="findByOrdName.do?PageNum=${pageInfo.pageNum-1}">上一页
+									<a href="findByIdApply.do?sqId=${person.jobId }&PageNum=${pageInfo.pageNum-1}">上一页
 									</a>
 									</c:when>
 									<c:otherwise>
@@ -304,15 +304,15 @@
 									<span class="current">${pageInfo.pageNum }</span>
 									</c:when>
 									<c:otherwise>
-									<a href="findByOrdName.do?PageNum=${item}">${item}</a>
+									<a href="findByIdApply.do?sqId=${person.jobId }&PageNum=${item}">${item}</a>
 									</c:otherwise>
 									</c:choose>
 									</c:forEach>
 									<c:choose>
 									<c:when test="${!pageInfo.isLastPage }">
-									<a href="findByOrdName.do?PageNum=${pageInfo.pageNum+1}">下一页
+									<a href="findByIdApply.do?sqId=${person.jobId }&PageNum=${pageInfo.pageNum+1}">下一页
 									</a>
-									<a href="findByOrdName.do?PageNum=${pageInfo.lastPage}">尾页</a>
+									<a href="findByIdApply.do?sqId=${person.jobId }&PageNum=${pageInfo.lastPage}">尾页</a>
 									</c:when>
 									<c:otherwise>
 									<span>下一页</span>
