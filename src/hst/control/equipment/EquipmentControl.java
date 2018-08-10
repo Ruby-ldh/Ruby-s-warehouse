@@ -214,6 +214,7 @@ public class EquipmentControl {
 					applyBean.setShName(auditorUserName);
 					applyBean.setShTime(auditorTime1);
 					applyBean.setRemark(remark);
+					applyBean.setCode(String.valueOf(code));
 					applyBean.setExpirationTime(expirationTime1);
 				 applyService.updateApply(applyBean);
 				 System.out.println(applyBean.getState());
